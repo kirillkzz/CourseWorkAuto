@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block title %}Новий маршрутний лист{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8 col-lg-6">
+        <div class="card shadow">
+            <div class="card-header bg-success text-white">
+                <h4 class="mb-0"><i class="fas fa-plus-circle"></i> Новий виїзд</h4>
+            </div>
+            <div class="card-body">
+                <form method="post">
+
+                    <div class="mb-3">
+                        <label for="sheet_date" class="form-label">Дата виїзду</label>
+                        <input type="date" class="form-control" id="sheet_date" name="sheet_date" required
+                               value="{{ today }}">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="vehicle_id" class="form-label">Транспортний засіб</label>
+                        <select class="form-select" id="vehicle_id" name="vehicle_id" required>
+                            <option value="" selected disabled>Оберіть авто...</option>
+                            {% for car in vehicles %}
+                            <option value="{{ car.vehicle_id }}">
+                                {{ car.license_plate }} ({{ car.model }}) — {{ car.driver_name }}
+                            </option>
+                            {% endfor %}
+                        </select>
+                        <div class="form-text">Вказано закріпленого водія.</div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="route_number" class="form-label">Маршрут</label>
+                        <select class="form-select" id="route_number" name="route_number" required>
+                            <option value="" selected disabled>Оберіть маршрут...</option>
+                            {% for route in routes %}
+                            <option value="{{ route.route_number }}">
+                                №{{ route.route_number }} ({{ route.mileage_km }} км)
+                            </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="fuel" class="form-label">Витрачено пального (літрів)</label>
+                        <input type="number" step="0.1" class="form-control" id="fuel" name="fuel" placeholder="Наприклад: 25.5" required>
+                    </div>
+
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                        <a href="{{ url_for('reports') }}" class="btn btn-secondary me-md-2">Скасувати</a>
+                        <button type="submit" class="btn btn-success">Зберегти запис</button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

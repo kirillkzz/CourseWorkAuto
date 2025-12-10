@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block title %}Водії{% endblock %}
+
+{% block content %}
+<div class="row mb-3">
+    <div class="col-md-6">
+        <h1><i class="fas fa-users text-primary"></i> Водії</h1>
+    </div>
+    <div class="col-md-6 text-end">
+        <form class="d-flex" method="get" action="{{ url_for('drivers_list') }}">
+            <input class="form-control me-2" type="search" name="q" placeholder="Пошук за іменем..." aria-label="Search" value="{{ request.args.get('q', '') }}">
+            <button class="btn btn-outline-primary" type="submit">Знайти</button>
+        </form>
+    </div>
+</div>
+
+<div class="row mb-4">
+    <div class="col-12 text-end">
+        <a href="{{ url_for('add_driver') }}" class="btn btn-primary">
+            <i class="fas fa-user-plus"></i> Додати водія
+        </a>
+    </div>
+</div>
+
+<div class="row row-cols-1 row-cols-md-3 g-4">
+    {% for driver in drivers %}
+    <div class="col">
+        <div class="card h-100 border-0 shadow-sm">
+            <div class="card-body text-center">
+                <div class="mb-3">
+                    <span class="avatar rounded-circle bg-light p-3">
+                        <i class="fas fa-user fa-2x text-secondary"></i>
+                    </span>
+                </div>
+                <h5 class="card-title">{{ driver.full_name }}</h5>
+                <p class="card-text text-muted small"><i class="fas fa-map-marker-alt"></i> {{ driver.address }}</p>
+                <div class="d-grid">
+                     <a href="tel:{{ driver.phone }}" class="btn btn-outline-success btn-sm">
+                         <i class="fas fa-phone"></i> {{ driver.phone }}
+                     </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% else %}
+    <div class="col-12 text-center">
+        <p class="text-muted">Водіїв не знайдено.</p>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

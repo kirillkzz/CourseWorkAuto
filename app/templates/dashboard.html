@@ -1,0 +1,114 @@
+{% extends "base.html" %}
+{% block title %}Панель керування{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1><i class="fas fa-tachometer-alt text-primary"></i> Панель керування</h1>
+    <div>
+        <span class="text-muted">Вітаємо, <strong>{{ current_user.username }}</strong>!</span>
+    </div>
+</div>
+
+<div class="row g-4">
+    <div class="col-md-6 col-lg-3">
+        <div class="card bg-primary text-white h-100">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <h6 class="card-title">Водіїв у штаті</h6>
+                        <h2 class="display-4 fw-bold">{{ stats.drivers_count }}</h2>
+                    </div>
+                    <i class="fas fa-users fa-4x opacity-50"></i>
+                </div>
+            </div>
+            <div class="card-footer d-flex align-items-center justify-content-between small">
+                <a class="text-white stretched-link" href="{{ url_for('drivers_list') }}">Переглянути деталі</a>
+                <i class="fas fa-angle-right"></i>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6 col-lg-3">
+        <div class="card bg-success text-white h-100">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <h6 class="card-title">Автомобілів</h6>
+                        <h2 class="display-4 fw-bold">{{ stats.vehicles_count }}</h2>
+                    </div>
+                    <i class="fas fa-bus fa-4x opacity-50"></i>
+                </div>
+            </div>
+            <div class="card-footer d-flex align-items-center justify-content-between small">
+                <a class="text-white stretched-link" href="{{ url_for('vehicles_list') }}">Переглянути парк</a>
+                <i class="fas fa-angle-right"></i>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6 col-lg-3">
+        <div class="card bg-warning text-dark h-100">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <h6 class="card-title">Всього рейсів</h6>
+                        <h2 class="display-4 fw-bold">{{ stats.sheets_count }}</h2>
+                    </div>
+                    <i class="fas fa-clipboard-list fa-4x opacity-50"></i>
+                </div>
+            </div>
+            <div class="card-footer d-flex align-items-center justify-content-between small">
+                <a class="text-dark stretched-link" href="{{ url_for('reports') }}">Відкрити журнал</a>
+                <i class="fas fa-angle-right"></i>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6 col-lg-3">
+        <div class="card bg-danger text-white h-100">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <h6 class="card-title">Витрачено пального</h6>
+                        <h3>{{ stats.total_fuel }} л</h3>
+                    </div>
+                    <i class="fas fa-gas-pump fa-4x opacity-50"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-md-12">
+        <div class="card shadow-sm">
+            <div class="card-header bg-white">
+                <h5 class="mb-0">
+                    <i class="fas fa-history text-warning"></i> Останні дії системи
+                </h5>
+            </div>
+            <ul class="list-group list-group-flush">
+                {% if recent_actions %}
+                    {% for action in recent_actions %}
+                        <li class="list-group-item">
+                            <i class="fas fa-check-circle text-success small me-2"></i> {{ action }}
+                        </li>
+                    {% endfor %}
+                {% else %}
+                    <li class="list-group-item text-muted fst-italic">
+                        Історія подій поки що порожня...
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-5">
+    <div class="col-12 text-center">
+        <a href="{{ url_for('create') }}" class="btn btn-outline-primary btn-lg px-5">
+            <i class="fas fa-plus-circle"></i> Створити новий маршрутний лист
+        </a>
+    </div>
+</div>
+{% endblock %}

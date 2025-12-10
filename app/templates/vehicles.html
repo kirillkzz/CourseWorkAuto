@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block title %}Транспорт{% endblock %}
+
+{% block content %}
+<h1 class="mb-4"><i class="fas fa-truck text-primary"></i> Автопарк</h1>
+
+<div class="mb-3 text-end">
+    <a href="{{ url_for('add_vehicle') }}" class="btn btn-success">
+        <i class="fas fa-truck"></i> Додати авто
+    </a>
+</div>
+
+<div class="table-responsive">
+    <table class="table align-middle bg-white shadow-sm rounded">
+        <thead class="bg-light">
+            <tr>
+                <th>Номер</th>
+                <th>Модель</th>
+                <th>Закріплений водій</th>
+                <th>Статус</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for car in vehicles %}
+            <tr>
+                <td><span class="badge bg-dark">{{ car.license_plate }}</span></td>
+                <td>{{ car.model }}</td>
+                <td>
+                    {% if car.driver_name %}
+                        <a href="#" class="text-decoration-none">{{ car.driver_name }}</a>
+                    {% else %}
+                        <span class="text-muted fst-italic">Не закріплено</span>
+                    {% endif %}
+                </td>
+                <td>
+                    <span class="badge bg-success">Активний</span>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block title %}Додати транспорт{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card shadow">
+            <div class="card-header bg-success text-white">
+                <h4 class="mb-0">Нове авто</h4>
+            </div>
+            <div class="card-body">
+                <form method="post">
+                    <div class="mb-3">
+                        <label class="form-label">Держ. номер</label>
+                        <input type="text" class="form-control" name="license_plate" required placeholder="AA0000AA">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Модель</label>
+                        <input type="text" class="form-control" name="model" required placeholder="Mersedes...">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Закріпити водія</label>
+                        <select class="form-select" name="driver_id" required>
+                            <option value="" disabled selected>Оберіть водія...</option>
+                            {% for driver in drivers %}
+                            <option value="{{ driver.driver_id }}">{{ driver.full_name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-success w-100">Зберегти</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
